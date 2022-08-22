@@ -200,6 +200,14 @@ public class BoardView extends JFrame implements IBoardView {
         colorButtonGroup.add(whiteRadioButton);
         colorButtonGroup.add(blackRadioButton);
 
+        JLabel opponentLabel = new JLabel("Opponent");
+        this.setBoldAndBorder(opponentLabel);
+        JRadioButton humanButton = new JRadioButton("Human", false);
+        JRadioButton computerButton = new JRadioButton("Computer", true);
+        ButtonGroup opponentButtonGroup = new ButtonGroup();
+        opponentButtonGroup.add(humanButton);
+        opponentButtonGroup.add(computerButton);
+
         JLabel computerLabel = new JLabel("Computer level");
         setBoldAndBorder(computerLabel);
         JSlider levelSlider = getLevelSlider();
@@ -213,6 +221,9 @@ public class BoardView extends JFrame implements IBoardView {
             colorLabel,
             whiteRadioButton,
             blackRadioButton,
+            opponentLabel,
+            humanButton,
+            computerButton,
             new JSeparator(),
             computerLabel,
             levelSlider,
@@ -235,35 +246,44 @@ public class BoardView extends JFrame implements IBoardView {
         Player whitePlayer;
         Player blackPlayer;
 
-        Player human = new Human("Player");
-        Player bot;
-        Integer timeout = null;
-        if (timeoutCheckBox.isSelected() && timeoutSpinner.getValue() instanceof Integer) {
-            timeout = (Integer) timeoutSpinner.getValue();
-        }
-        if (levelSlider.getValue() == 0) {
-            bot = botFactory.getRandomBot();
-        } else {
-            if (openingsCheckBox.isSelected()) {
-                bot = botFactory.getExperiencedBot(levelSlider.getValue() - 1, timeout);
-            } else {
-                bot = botFactory.getTraditionalBot(levelSlider.getValue() - 1, timeout);
+        Player player1, player2;
+        if (computerButton.isSelected())
+        {
+            player1 = new Human("Player");
+            Integer timeout = null;
+            if (timeoutCheckBox.isSelected() && timeoutSpinner.getValue() instanceof Integer) {
+                timeout = (Integer) timeoutSpinner.getValue();
             }
+            if (levelSlider.getValue() == 0)
+                player2 = botFactory.getRandomBot();
+            else
+            {
+                if (openingsCheckBox.isSelected()) {
+                    player2 = botFactory.getExperiencedBot(levelSlider.getValue() - 1, timeout);
+                } else {
+                    player2 = botFactory.getTraditionalBot(levelSlider.getValue() - 1, timeout);
+                }
+            }
+        }
+        else // if (humanButton.isSelected())
+        {
+            player1 = new Human("Player 1");
+            player2 = new Human("Player 2");
         }
 
         if (whiteRadioButton.isSelected()) {
-            whitePlayer = human;
-            blackPlayer = bot;
+            whitePlayer = player1;
+            blackPlayer = player2;
         } else {
-            whitePlayer = bot;
-            blackPlayer = human;
+            whitePlayer = player2;
+            blackPlayer = player1;
         }
 
         return new GameSetup(whitePlayer, blackPlayer);
     }
 
     public Piece promotionDialog(ch.teemoo.bobby.models.Color color) {
-        JLabel funLabel = new JLabel("Wow! Your pawn jus reached the end of the world!\n");
+        JLabel funLabel = new JLabel("Wow! Your pawn just reached the end of the world!\n");
         JLabel promoteLabel = new JLabel("Promote pawn to");
         setBoldAndBorder(promoteLabel);
         JRadioButton queenRadioButton = new JRadioButton("♕ Queen", true);
