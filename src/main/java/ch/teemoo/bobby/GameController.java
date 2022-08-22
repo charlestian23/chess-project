@@ -237,6 +237,7 @@ public class GameController {
 					loser = game.getPlayerByColor(Color.BLACK);
 				else
 					loser = game.getPlayerByColor(Color.WHITE);
+
 				if (winningColor == Color.WHITE) {
 					info("1-0" + getNbMovesInfo(game), false);
 					gameResultConsumer.accept(new GameResult(game.getHistory().size(), GameResult.Result.WHITE_WINS));
