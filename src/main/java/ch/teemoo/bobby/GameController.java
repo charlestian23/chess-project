@@ -17,9 +17,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import javax.swing.BorderFactory;
-import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
+import javax.swing.*;
 import javax.swing.border.Border;
 
 import ch.teemoo.bobby.gui.IBoardView;
@@ -87,7 +85,7 @@ public class GameController {
 		view.setItemPrintToConsoleActionListener(actionEvent -> printGameToConsole());
 		view.setItemSuggestMoveActionListener(actionEvent -> suggestMove());
 		view.setItemUndoMoveActionListener(actionEvent -> undoLastMove());
-		view.setItemProposeDrawActionListener(actionEvent -> evaluateDrawProposal());
+		view.setItemProposeDrawActionListener(actionEvent -> proposeDraw());
 	}
 
 	public void newGame(GameSetup gameSetup, boolean exitOnCancel, Consumer<GameResult> gameResultConsumer) {
@@ -456,25 +454,60 @@ public class GameController {
 		play();
 	}
 
+	void requestDraw()
+	{
+		Player playerPlaying = game.getPlayerToPlay();
+		Player playerWaiting = game.getPlayerWaiting();
+		if (playerPlaying.isBot() && !playerWaiting.isBot())
+			info("Sorry, it is not your turn", true);
+		else if (!playerPlaying.isBot() && playerWaiting.isBot())
+			this.evaluateDrawProposal();
+		else
+			this.proposeDraw();
+	}
+
 	void evaluateDrawProposal() {
 		Player playerWaiting = game.getPlayerWaiting();
-		if (playerWaiting.isBot()) {
-			boolean drawAccepted = ((Bot) playerWaiting).isDrawAcceptable(game);
-			if (drawAccepted) {
-				info("Hmmm OK, I hate draws but you played quite well... Accepted!", true);
-				game.setState(GameState.DRAW_AGREEMENT);
-				cleanSelectedSquare();
-				view.cleanSquaresBorder();
-				view.resetAllClickables();
-				displayGameInfo(null);
-			} else {
-				info("Are you kidding me? A champion like me can't accept such proposal (at least not now).", true);
-			}
+		boolean drawAccepted = ((Bot) playerWaiting).isDrawAcceptable(game);
+		if (drawAccepted) {
+			info("Hmmm OK, I hate draws but you played quite well... Accepted!", true);
+			game.setState(GameState.DRAW_AGREEMENT);
+			cleanSelectedSquare();
+			view.cleanSquaresBorder();
+			view.resetAllClickables();
+			displayGameInfo(null);
 		} else {
-			info("Sorry, it is not your turn", true);
+			info("Are you kidding me? A champion like me can't accept such proposal (at least not now).", true);
 		}
 	}
 
+	void proposeDraw() {
+		Player playerPlaying = game.getPlayerToPlay();
+		Player playerWaiting = game.getPlayerWaiting();
+
+		JRadioButton acceptDraw = new JRadioButton("Accept draw", false);
+		JRadioButton rejectDraw = new JRadioButton("Reject draw", true);
+		ButtonGroup opponentButtonGroup = new ButtonGroup();
+		opponentButtonGroup.add(acceptDraw);
+		opponentButtonGroup.add(rejectDraw);
+
+		JLabel messageLabel = new JLabel(playerPlaying.getName() + " has proposed a draw. " + playerWaiting.getName() + ", will you accept a draw?");
+
+		final JComponent[] inputs = new JComponent[]{messageLabel, acceptDraw, rejectDraw};
+		JOptionPane.showConfirmDialog(null, inputs, "Draw?", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+		if (acceptDraw.isSelected())
+		{
+			info(playerWaiting.getName() + " has accepted the draw.", true);
+			game.setState(GameState.DRAW_AGREEMENT);
+			cleanSelectedSquare();
+			view.cleanSquaresBorder();
+			view.resetAllClickables();
+			displayGameInfo(null);
+		}
+		else
+			info(playerWaiting.getName() + " has rejected the draw! The game continues!", true);
+	}
 	private Move getLastMove() {
 		return game.getHistory().get(game.getHistory().size() - 1);
 	}
