@@ -232,6 +232,11 @@ public class GameController {
 			case LOSS:
 				Color winningColor = move.getPiece().getColor();
 				Player winner = game.getPlayerByColor(winningColor);
+				Player loser;
+				if (winningColor == Color.WHITE)
+					loser = game.getPlayerByColor(Color.BLACK);
+				else
+					loser = game.getPlayerByColor(Color.WHITE);
 				if (winningColor == Color.WHITE) {
 					info("1-0" + getNbMovesInfo(game), false);
 					gameResultConsumer.accept(new GameResult(game.getHistory().size(), GameResult.Result.WHITE_WINS));
@@ -242,9 +247,12 @@ public class GameController {
 				if (winner.isBot()) {
 					info("Checkmate! Ha ha, not even Spassky could beat me!", showPopup);
 				} else {
-					info(
-						"Checkmated?!? Noooo! How is this possible?\nCongrats, not everybody is able to beat the genius Bobby!",
-						showPopup);
+					if (loser.isBot())
+						info(
+							"Checkmated?!? Noooo! How is this possible?\nCongrats, not everybody is able to beat the genius Bobby!",
+							showPopup);
+					else
+						info(winner.getName() + " wins!", showPopup);
 				}
 				break;
 			case DRAW_STALEMATE:
