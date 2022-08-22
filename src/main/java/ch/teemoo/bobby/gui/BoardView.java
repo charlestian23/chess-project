@@ -200,6 +200,14 @@ public class BoardView extends JFrame implements IBoardView {
         colorButtonGroup.add(whiteRadioButton);
         colorButtonGroup.add(blackRadioButton);
 
+        JLabel opponentLabel = new JLabel("Opponent");
+        this.setBoldAndBorder(opponentLabel);
+        JRadioButton humanButton = new JRadioButton("Human", false);
+        JRadioButton computerButton = new JRadioButton("Computer", true);
+        ButtonGroup opponentButtonGroup = new ButtonGroup();
+        opponentButtonGroup.add(humanButton);
+        opponentButtonGroup.add(computerButton);
+
         JLabel computerLabel = new JLabel("Computer level");
         setBoldAndBorder(computerLabel);
         JSlider levelSlider = getLevelSlider();
@@ -213,6 +221,9 @@ public class BoardView extends JFrame implements IBoardView {
             colorLabel,
             whiteRadioButton,
             blackRadioButton,
+            opponentLabel,
+            humanButton,
+            computerButton,
             new JSeparator(),
             computerLabel,
             levelSlider,
