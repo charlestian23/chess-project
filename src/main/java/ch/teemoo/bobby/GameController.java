@@ -85,7 +85,7 @@ public class GameController {
 		view.setItemPrintToConsoleActionListener(actionEvent -> printGameToConsole());
 		view.setItemSuggestMoveActionListener(actionEvent -> suggestMove());
 		view.setItemUndoMoveActionListener(actionEvent -> undoLastMove());
-		view.setItemProposeDrawActionListener(actionEvent -> proposeDraw());
+		view.setItemProposeDrawActionListener(actionEvent -> requestDraw());
 	}
 
 	public void newGame(GameSetup gameSetup, boolean exitOnCancel, Consumer<GameResult> gameResultConsumer) {
