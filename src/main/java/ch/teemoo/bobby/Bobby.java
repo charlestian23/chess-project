@@ -8,6 +8,7 @@ import ch.teemoo.bobby.gui.IBoardView;
 import ch.teemoo.bobby.helpers.BotFactory;
 import ch.teemoo.bobby.helpers.GameFactory;
 import ch.teemoo.bobby.helpers.GuiHelper;
+import ch.teemoo.bobby.models.database.Database;
 import ch.teemoo.bobby.models.games.GameSetup;
 import ch.teemoo.bobby.models.players.Human;
 import ch.teemoo.bobby.services.FileService;
@@ -55,6 +56,7 @@ public class Bobby implements Runnable {
         GameController gameController = new GameController(boardView, gameFactory, botFactory, moveService, fileService,
             portableGameNotationService);
         gameController.newGame(gameSetup, true, r -> {});
+        Database.createDatabase();
     }
 
     private static void setLookAndFeel(boolean useDefaultSettings) {

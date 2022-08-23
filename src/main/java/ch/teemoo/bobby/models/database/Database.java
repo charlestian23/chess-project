@@ -7,6 +7,7 @@ import java.sql.*;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 
+// References: https://stackoverflow.com/questions/30651830/use-jdbc-mysql-connector-in-intellij-idea
 public class Database
 {
     private static final String URL = "jdbc:mysql://localhost";
@@ -20,6 +21,11 @@ public class Database
         try
         {
             Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            PreparedStatement statement = connection.prepareStatement("create database if not exists bobby_chess");
+            statement.execute();
+            connection.close();
+
+            connection = DriverManager.getConnection(URL + "/bobby_chess", USERNAME, PASSWORD);
             ScriptRunner scriptRunner = new ScriptRunner(connection);
             Reader reader = new BufferedReader(new FileReader(QUERY_LOCATIONS + "create.sql"));
             scriptRunner.runScript(reader);
