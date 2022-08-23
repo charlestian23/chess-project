@@ -26,6 +26,7 @@ import ch.teemoo.bobby.helpers.BotFactory;
 import ch.teemoo.bobby.helpers.GameFactory;
 import ch.teemoo.bobby.models.Board;
 import ch.teemoo.bobby.models.Color;
+import ch.teemoo.bobby.models.database.Database;
 import ch.teemoo.bobby.models.games.Game;
 import ch.teemoo.bobby.models.games.GameResult;
 import ch.teemoo.bobby.models.games.GameSetup;
@@ -63,6 +64,8 @@ public class GameController {
 
 	private Square selectedSquare = null;
 
+	private int gameID;
+
 	public GameController(IBoardView view, GameFactory gameFactory, BotFactory botFactory, MoveService moveService,
 		FileService fileService, PortableGameNotationService portableGameNotationService) {
 		this.moveService = moveService;
@@ -97,6 +100,7 @@ public class GameController {
 				gameSetup = gameSetupFromDialog;
 			}
 		}
+		this.gameID = Database.getNextID();
 		this.game = gameFactory.createGame(gameSetup);
 		this.board = game.getBoard();
 		this.gameResultConsumer = gameResultConsumer;
@@ -168,7 +172,10 @@ public class GameController {
 		view.refresh(board.getBoard());
 		view.addBorderToLastMoveSquares(allowedMove);
 		info(allowedMove.getPrettyNotation(), false);
+
 		game.addMoveToHistory(allowedMove);
+		Database.addMove(this.gameID, game.getTotalMoves(), allowedMove.getBasicNotation());
+
 		game.setToPlay(swap(allowedMove.getPiece().getColor()));
 		displayGameInfo(allowedMove);
 	}
@@ -212,6 +219,8 @@ public class GameController {
 		}
 
 		board.undoMove(move);
+		Database.removeMove(this.gameID, game.getTotalMoves());
+
 		view.refresh(board.getBoard());
 		info("Undo: " + move.getPrettyNotation(), false);
 		game.removeLastMoveFromHistory();

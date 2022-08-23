@@ -15,17 +15,18 @@ public class Database
     private static final String PASSWORD = "password";
 
     private static final String QUERY_LOCATIONS = "src/main/resources/sql/";
+    private static final String SERVER_NAME = "bobby_chess";
 
     public static void createDatabase()
     {
         try
         {
             Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            PreparedStatement statement = connection.prepareStatement("create database if not exists bobby_chess");
+            PreparedStatement statement = connection.prepareStatement("create database if not exists " + SERVER_NAME);
             statement.execute();
             connection.close();
 
-            connection = DriverManager.getConnection(URL + "/bobby_chess", USERNAME, PASSWORD);
+            connection = DriverManager.getConnection(URL + "/" + SERVER_NAME, USERNAME, PASSWORD);
             ScriptRunner scriptRunner = new ScriptRunner(connection);
             Reader reader = new BufferedReader(new FileReader(QUERY_LOCATIONS + "create.sql"));
             scriptRunner.runScript(reader);
@@ -42,7 +43,7 @@ public class Database
         int id = -1;
         try
         {
-            Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            Connection connection = DriverManager.getConnection(URL + "/" + SERVER_NAME, USERNAME, PASSWORD);
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select max(id) + 1 as next_id from games");
             resultSet.next();
@@ -62,8 +63,8 @@ public class Database
     {
         try
         {
-            Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            String insert = "insert into game (id, move_number, move) values (?, ?, ?)";
+            Connection connection = DriverManager.getConnection(URL + "/" + SERVER_NAME, USERNAME, PASSWORD);
+            String insert = "insert into games (id, move_number, move) values (?, ?, ?)";
             PreparedStatement insertStatement = connection.prepareStatement(insert);
             insertStatement.setInt(1, id);
             insertStatement.setInt(2, move_number);
@@ -77,11 +78,29 @@ public class Database
         }
     }
 
+    public static void removeMove(int id, int move_number)
+    {
+        try
+        {
+            Connection connection = DriverManager.getConnection(URL + "/" + SERVER_NAME, USERNAME, PASSWORD);
+            String insert = "delete from games where id = ? and move_number = ?";
+            PreparedStatement insertStatement = connection.prepareStatement(insert);
+            insertStatement.setInt(1, id);
+            insertStatement.setInt(2, move_number);
+            insertStatement.execute();
+            connection.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     public static void addPlayers(int id, String whitePlayer, String blackPlayer)
     {
         try
         {
-            Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            Connection connection = DriverManager.getConnection(URL + "/" + SERVER_NAME, USERNAME, PASSWORD);
             String insert = "insert into players (id, white_player, black_player) values (?, ?, ?)";
             PreparedStatement insertStatement = connection.prepareStatement(insert);
             insertStatement.setInt(1, id);
