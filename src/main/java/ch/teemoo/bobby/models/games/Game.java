@@ -7,6 +7,7 @@ import java.util.List;
 
 import ch.teemoo.bobby.models.Board;
 import ch.teemoo.bobby.models.Color;
+import ch.teemoo.bobby.models.database.Database;
 import ch.teemoo.bobby.models.moves.Move;
 import ch.teemoo.bobby.models.pieces.Bishop;
 import ch.teemoo.bobby.models.pieces.King;
@@ -148,5 +149,10 @@ public class Game {
         pos[6][7] = new Pawn(Color.BLACK);
 
         return pos;
+    }
+
+    public int getTotalMoves()
+    {
+        return this.history.size();
     }
 }
