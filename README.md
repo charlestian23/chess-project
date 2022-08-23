@@ -1,5 +1,5 @@
 # Just Another Chess Project
-This is a repository I forked off of [teemoo7's implementation of chess](https://github.com/teemoo7/bobby) primarily to practice using the MVC design pattern and SQL databases. This repository is for my personal learning and future reference.
+This is a repository I forked off of [teemoo7's implementation of chess](https://github.com/teemoo7/bobby) primarily to practice using the MVC design pattern and MySQL databases. This repository is for my personal learning and future reference.
 
 The remainder of this README is from teemoo7's [original README file](https://github.com/teemoo7/bobby/blob/master/README.md).
 
