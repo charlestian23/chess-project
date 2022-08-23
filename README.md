@@ -1,3 +1,8 @@
+# Just Another Chess Project
+This is a repository I forked off of [teemoo7's implementation of chess](https://github.com/teemoo7/bobby) primarily to practice using the MVC design pattern and SQL databases. This repository is for my personal learning and future reference.
+
+The remainder of this README is from teemoo7's [original README file](https://github.com/teemoo7/bobby/blob/master/README.md).
+
 # Bobby
 
 [![Build Status](https://travis-ci.org/teemoo7/bobby.svg?branch=master)](https://travis-ci.org/teemoo7/bobby) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ch.teemoo%3Abobby&metric=alert_status)](https://sonarcloud.io/dashboard?id=ch.teemoo%3Abobby) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ch.teemoo%3Abobby&metric=coverage)](https://sonarcloud.io/dashboard?id=ch.teemoo%3Abobby)
