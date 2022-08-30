@@ -1,6 +1,15 @@
 # Just Another Chess Project
 This is a repository I forked off of [teemoo7's implementation of chess](https://github.com/teemoo7/bobby) primarily to practice using the MVC design pattern and MySQL databases. This repository is for my personal learning and future reference.
 
+## How to access the MySQL monitor from the Command Prompt
+In the Windows Command Prompt, type the following command:
+```
+mysql -u root -p
+```
+When prompted, type in whatever you set the password to. A welcome messages should be displayed once you enter the monitor.
+
+If you get an error message after you type in the password, check that you typed in your password correctly and that the MySQL database is running in Windows Services.
+
 The remainder of this README is from teemoo7's [original README file](https://github.com/teemoo7/bobby/blob/master/README.md).
 
 # Bobby
