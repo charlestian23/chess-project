@@ -83,6 +83,7 @@ public class GameController {
 		view.setItemNewActionListener(actionEvent -> {
 			newGame(null, false, r -> {});
 		});
+		view.setItemOpenGameActionListener(actionEvent -> openGame());
 		view.setItemLoadActionListener(actionEvent -> loadGame());
 		view.setItemSaveActionListener(actionEvent -> saveGame());
 		view.setItemPrintToConsoleActionListener(actionEvent -> printGameToConsole());
@@ -399,6 +400,11 @@ public class GameController {
 				error(e, true);
 			}
 		}
+	}
+
+	// TODO: Implement
+	void openGame() {
+
 	}
 
 	void loadGame() {

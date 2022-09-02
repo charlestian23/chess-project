@@ -13,6 +13,8 @@ public interface IBoardView {
 	
 	Square[][] getSquares();
 
+	void setItemOpenGameActionListener(ActionListener actionListener);
+
 	void setItemNewActionListener(ActionListener actionListener);
 
 	void setItemSaveActionListener(ActionListener actionListener);
