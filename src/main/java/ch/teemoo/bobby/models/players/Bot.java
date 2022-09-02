@@ -8,7 +8,7 @@ public abstract class Bot extends Player {
     protected final MoveService moveService;
 
     public Bot(MoveService moveService) {
-        super("Bobby");
+        super("Bobby (CPU)");
         this.moveService = moveService;
     }
 

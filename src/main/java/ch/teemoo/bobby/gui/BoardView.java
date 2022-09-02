@@ -207,6 +207,8 @@ public class BoardView extends JFrame implements IBoardView {
         colorButtonGroup.add(whiteRadioButton);
         colorButtonGroup.add(blackRadioButton);
 
+        JTextField yourNameTextField = new JTextField("Player 1");
+
         JLabel opponentLabel = new JLabel("Opponent");
         this.setBoldAndBorder(opponentLabel);
         JRadioButton humanButton = new JRadioButton("Human", false);
@@ -214,6 +216,8 @@ public class BoardView extends JFrame implements IBoardView {
         ButtonGroup opponentButtonGroup = new ButtonGroup();
         opponentButtonGroup.add(humanButton);
         opponentButtonGroup.add(computerButton);
+
+        JTextField opponentNameTextField = new JTextField("Player 2");
 
         JLabel computerLabel = new JLabel("Computer level");
         setBoldAndBorder(computerLabel);
@@ -226,9 +230,11 @@ public class BoardView extends JFrame implements IBoardView {
 
         final JComponent[] inputs = new JComponent[] {
             colorLabel,
+            yourNameTextField,
             whiteRadioButton,
             blackRadioButton,
             opponentLabel,
+            opponentNameTextField,
             humanButton,
             computerButton,
             new JSeparator(),
@@ -256,7 +262,7 @@ public class BoardView extends JFrame implements IBoardView {
         Player player1, player2;
         if (computerButton.isSelected())
         {
-            player1 = new Human("Player");
+            player1 = new Human(yourNameTextField.getText());
             Integer timeout = null;
             if (timeoutCheckBox.isSelected() && timeoutSpinner.getValue() instanceof Integer) {
                 timeout = (Integer) timeoutSpinner.getValue();
@@ -274,8 +280,8 @@ public class BoardView extends JFrame implements IBoardView {
         }
         else // if (humanButton.isSelected())
         {
-            player1 = new Human("Player 1");
-            player2 = new Human("Player 2");
+            player1 = new Human(yourNameTextField.getText());
+            player2 = new Human(opponentNameTextField.getText());
         }
 
         if (whiteRadioButton.isSelected()) {
@@ -442,7 +448,7 @@ public class BoardView extends JFrame implements IBoardView {
         JOptionPane.showMessageDialog(this,
             "Bobby " + guiHelper.getVersion() + " (" + guiHelper.getBuildTimestamp() + ")\n"
                 + " \n"
-                + "Written with ♥ by Micaël Paquier\n"
+                + "Written with ♥ by Micaël Paquier with contributions by Charles Tian\n"
                 + " \n"
                 + "Humble tribute to Robert James \"Bobby\" Fischer,\n"
                 + "World Chess Champion\n"

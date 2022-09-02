@@ -103,6 +103,9 @@ public class GameController {
 		}
 		this.gameID = Database.getNextID();
 		this.game = gameFactory.createGame(gameSetup);
+
+		Database.addPlayers(this.gameID, this.game.getWhitePlayer().getName(), this.game.getBlackPlayer().getName());
+
 		this.board = game.getBoard();
 		this.gameResultConsumer = gameResultConsumer;
 		refreshBoardView(board);
