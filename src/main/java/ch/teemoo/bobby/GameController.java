@@ -424,9 +424,9 @@ public class GameController {
 		final JComponent[] inputs = new JComponent[]{messageLabel, comboBox};
 		JOptionPane.showConfirmDialog(null, inputs, "Open Game", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE);
 
+		// Load data from the database
 		String selectedItem = (String) comboBox.getSelectedItem();
 		int selectedID = Integer.valueOf(selectedItem.substring(1, selectedItem.indexOf(')')));
-		System.out.println("selected id: " + selectedID);
 		List<Map<String, String>> moveData = Database.getMovesFromID(selectedID);
 		List<String> moves = new LinkedList<>();
 		for (Map<String, String> map : moveData)
