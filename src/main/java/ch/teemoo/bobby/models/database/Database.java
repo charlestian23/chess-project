@@ -4,6 +4,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.Reader;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 
@@ -45,7 +49,7 @@ public class Database
         {
             Connection connection = DriverManager.getConnection(URL + "/" + SERVER_NAME, USERNAME, PASSWORD);
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select max(id) + 1 as next_id from games");
+            ResultSet resultSet = statement.executeQuery("select max(id) + 1 as next_id from players");
             resultSet.next();
             if (resultSet != null)
                 id = resultSet.getInt("next_id");
@@ -113,5 +117,35 @@ public class Database
         {
             e.printStackTrace();
         }
+    }
+
+    public static List<Map<String, String>> getPlayers()
+    {
+        try
+        {
+            Connection connection = DriverManager.getConnection(URL + "/" + SERVER_NAME, USERNAME, PASSWORD);
+            String getData = "select * from players";
+            PreparedStatement getDataStatement = connection.prepareStatement(getData);
+            ResultSet resultSet = getDataStatement.executeQuery(getData);
+
+            List<Map<String, String>> data = new LinkedList<>();
+
+            while (resultSet.next())
+            {
+                Map<String, String> row = new HashMap<>();
+                row.put("id", resultSet.getString("id"));
+                row.put("white_player", resultSet.getString("white_player"));
+                row.put("black_player", resultSet.getString("black_player"));
+                data.add(row);
+            }
+
+            return data;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

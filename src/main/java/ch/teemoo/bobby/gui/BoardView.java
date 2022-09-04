@@ -373,7 +373,7 @@ public class BoardView extends JFrame implements IBoardView {
         JMenuItem itemExit = new JMenuItem("Exit");
         fileMenu.add(itemExit);
         itemExit.addActionListener(actionEvent -> exit());
-
+        fileMenu.addSeparator();
         this.itemOpenGame = new JMenuItem("Open Game");
         fileMenu.add(this.itemOpenGame);
 

@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
@@ -407,7 +408,19 @@ public class GameController {
 
 	// TODO: Implement
 	void openGame() {
+		List<Map<String, String>> data = Database.getPlayers();
+		String[] choices = new String[data.size()];
+		for (int i = 0; i < data.size(); i++)
+		{
+			Map<String, String> map = data.get(i);
+			String item = "(" + map.get("id") + ") " + map.get("white_player") + " [W] vs. " + map.get("black_player") +" [B]";
+			choices[i] = item;
+		}
 
+		JLabel messageLabel = new JLabel("Select a game to review: ");
+		final JComboBox<String> comboBox = new JComboBox<>(choices);
+		final JComponent[] inputs = new JComponent[]{messageLabel, comboBox};
+		JOptionPane.showConfirmDialog(null, inputs, "Open Game", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE);
 	}
 
 	void loadGame() {
