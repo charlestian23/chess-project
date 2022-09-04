@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -408,6 +409,7 @@ public class GameController {
 
 	// TODO: Implement
 	void openGame() {
+		// Getting the moves
 		List<Map<String, String>> data = Database.getPlayers();
 		String[] choices = new String[data.size()];
 		for (int i = 0; i < data.size(); i++)
@@ -422,9 +424,15 @@ public class GameController {
 		final JComponent[] inputs = new JComponent[]{messageLabel, comboBox};
 		JOptionPane.showConfirmDialog(null, inputs, "Open Game", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-		int selectedID = comboBox.getSelectedIndex();
-		List<Map<String, String>> moves = Database.getMovesFromID(selectedID);
-		System.out.println(moves);
+		String selectedItem = (String) comboBox.getSelectedItem();
+		int selectedID = Integer.valueOf(selectedItem.substring(1, selectedItem.indexOf(')')));
+		System.out.println("selected id: " + selectedID);
+		List<Map<String, String>> moveData = Database.getMovesFromID(selectedID);
+		List<String> moves = new LinkedList<>();
+		for (Map<String, String> map : moveData)
+			moves.add(map.get("move"));
+		applyMovesFromBasicNotationFile(moves);
+		play();
 	}
 
 	void loadGame() {

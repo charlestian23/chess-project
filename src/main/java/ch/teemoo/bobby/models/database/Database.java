@@ -151,10 +151,11 @@ public class Database
 
     public static List<Map<String, String>> getMovesFromID(int id)
     {
+        // System.out.println("ID: " + id);
         try
         {
             Connection connection = DriverManager.getConnection(URL + "/" + SERVER_NAME, USERNAME, PASSWORD);
-            String getData = "select * from games where id = " + id;
+            String getData = "select * from games where id = " + id + " order by move_number asc";
             PreparedStatement getDataStatement = connection.prepareStatement(getData);
             ResultSet resultSet = getDataStatement.executeQuery(getData);
 
@@ -168,6 +169,8 @@ public class Database
                 row.put("move", resultSet.getString("move"));
                 data.add(row);
             }
+
+            return data;
         }
         catch (Exception e)
         {
