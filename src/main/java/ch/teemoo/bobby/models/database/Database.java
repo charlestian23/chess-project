@@ -148,4 +148,32 @@ public class Database
 
         return null;
     }
+
+    public static List<Map<String, String>> getMovesFromID(int id)
+    {
+        try
+        {
+            Connection connection = DriverManager.getConnection(URL + "/" + SERVER_NAME, USERNAME, PASSWORD);
+            String getData = "select * from games where id = " + id;
+            PreparedStatement getDataStatement = connection.prepareStatement(getData);
+            ResultSet resultSet = getDataStatement.executeQuery(getData);
+
+            List<Map<String, String>> data = new LinkedList<>();
+
+            while (resultSet.next())
+            {
+                Map<String, String> row = new HashMap<>();
+                row.put("id", resultSet.getString("id"));
+                row.put("move_number", String.valueOf(resultSet.getInt("move_number")));
+                row.put("move", resultSet.getString("move"));
+                data.add(row);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

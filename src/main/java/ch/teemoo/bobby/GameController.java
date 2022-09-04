@@ -421,6 +421,10 @@ public class GameController {
 		final JComboBox<String> comboBox = new JComboBox<>(choices);
 		final JComponent[] inputs = new JComponent[]{messageLabel, comboBox};
 		JOptionPane.showConfirmDialog(null, inputs, "Open Game", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+		int selectedID = comboBox.getSelectedIndex();
+		List<Map<String, String>> moves = Database.getMovesFromID(selectedID);
+		System.out.println(moves);
 	}
 
 	void loadGame() {
