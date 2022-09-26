@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicArrowButton;
 
 import ch.teemoo.bobby.helpers.BotFactory;
 import ch.teemoo.bobby.helpers.GuiHelper;
@@ -50,47 +51,41 @@ public class ReviewGameView extends JFrame implements IBoardView {
     private JMenuItem itemOpenGame;
 
 
-    @Override
+    //fixme: do not expose squares array (mutable internal representation)
+    @SuppressFBWarnings("EI_EXPOSE_REP")
     public Square[][] getSquares() {
-        return new Square[0][];
+        return squares;
     }
 
-    @Override
-    public void setItemOpenGameActionListener(ActionListener actionListener) {
-
+    public void setItemOpenGameActionListener(ActionListener actionListener)
+    {
+        itemOpenGame.addActionListener(actionListener);
     }
 
-    @Override
     public void setItemNewActionListener(ActionListener actionListener) {
-
+        itemNew.addActionListener(actionListener);
     }
 
-    @Override
     public void setItemSaveActionListener(ActionListener actionListener) {
-
+        itemSave.addActionListener(actionListener);
     }
 
-    @Override
     public void setItemLoadActionListener(ActionListener actionListener) {
-
+        itemLoad.addActionListener(actionListener);
     }
 
-    @Override
     public void setItemPrintToConsoleActionListener(ActionListener actionListener) {
-
+        itemPrintToConsole.addActionListener(actionListener);
     }
 
-    @Override
     public void setItemSuggestMoveActionListener(ActionListener actionListener) {
 
     }
 
-    @Override
     public void setItemUndoMoveActionListener(ActionListener actionListener) {
 
     }
 
-    @Override
     public void setItemProposeDrawActionListener(ActionListener actionListener) {
 
     }
@@ -148,5 +143,13 @@ public class ReviewGameView extends JFrame implements IBoardView {
     @Override
     public void popupError(String message) {
 
+    }
+
+    private JButton getPreviousMoveButton() {
+        return new BasicArrowButton(BasicArrowButton.WEST);
+    }
+
+    private JButton getNextMoveButton() {
+        return new BasicArrowButton(BasicArrowButton.EAST);
     }
 }
