@@ -14,7 +14,7 @@ The remainder of this README is from teemoo7's [original README file](https://gi
 
 # Bobby
 
-[![Build Status](https://travis-ci.org/teemoo7/bobby.svg?branch=master)](https://travis-ci.org/teemoo7/bobby) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ch.teemoo%3Abobby&metric=alert_status)](https://sonarcloud.io/dashboard?id=ch.teemoo%3Abobby) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ch.teemoo%3Abobby&metric=coverage)](https://sonarcloud.io/dashboard?id=ch.teemoo%3Abobby)
+[![Build](https://github.com/teemoo7/bobby/actions/workflows/build.yml/badge.svg)](https://github.com/teemoo7/bobby/actions/workflows/build.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ch.teemoo%3Abobby&metric=alert_status)](https://sonarcloud.io/dashboard?id=ch.teemoo%3Abobby) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ch.teemoo%3Abobby&metric=coverage)](https://sonarcloud.io/dashboard?id=ch.teemoo%3Abobby)
 
 This basic Chess game is a humble tribute to famous Chess player [Robert James "Bobby" Fischer](https://en.wikipedia.org/wiki/Bobby_Fischer), World Chess Champion.
 
@@ -22,7 +22,7 @@ Note that the author does not agree with Fischer's political and religious opini
 
 ![Bobby Chess Game](src/main/resources/img/logo.png "Bobby Chess Game")
 
-**Note:** requires Java 11
+**Note:** requires Java 17
 
 ## About Bobby
 
@@ -35,7 +35,7 @@ If you are interested in how this engine works, please have a look at those two 
 
 ### From a released JAR
 
-1. If not already done, you can install OpenJDK 11 for free (see the excellent distributions of [AdoptOpenJDK](https://adoptopenjdk.net/?variant=openjdk11&jvmVariant=hotspot))
+1. If not already done, you can install OpenJDK 17 for free (see the excellent distributions of [Temurin by Adoptium](https://adoptium.net/temurin/releases/?version=17))
 2. Download the [latest release JAR](https://github.com/teemoo7/bobby/releases/download/bobby-0.1/bobby-0.1.jar)
 3. Then launch the downloaded JAR
     ```
@@ -76,11 +76,11 @@ Open https://www.bobby-chess.com/bobby/ for a browser version of the game (limit
 
 ### Technical
 
-* Uses Java 11
+* Uses Java 17
 * Ability to use bundled light JRE ([doc here](PACKAGE.md))
 * Strong code coverage, incl. GUI testing
 * Code style with Checkstyle, code quality with SpotBugs and SonarSource
-* Pipeline with TravisCI
+* Pipeline with GitHub Actions
 * Uses a nice modern Look & Feel [FlatLaf](https://github.com/JFormDesigner/FlatLaf) for all platforms
 * Uses free font _FreeSerif_ in order to have a nice rendering of chess pieces
 
