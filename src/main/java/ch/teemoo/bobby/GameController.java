@@ -11,7 +11,9 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
@@ -83,6 +85,7 @@ public class GameController {
 		view.setItemNewActionListener(actionEvent -> {
 			newGame(null, false, r -> {});
 		});
+		view.setItemOpenGameActionListener(actionEvent -> openGame());
 		view.setItemLoadActionListener(actionEvent -> loadGame());
 		view.setItemSaveActionListener(actionEvent -> saveGame());
 		view.setItemPrintToConsoleActionListener(actionEvent -> printGameToConsole());
@@ -402,6 +405,34 @@ public class GameController {
 				error(e, true);
 			}
 		}
+	}
+
+	// TODO: Implement
+	void openGame() {
+		// Getting the moves
+		List<Map<String, String>> data = Database.getPlayers();
+		String[] choices = new String[data.size()];
+		for (int i = 0; i < data.size(); i++)
+		{
+			Map<String, String> map = data.get(i);
+			String item = "(" + map.get("id") + ") " + map.get("white_player") + " [W] vs. " + map.get("black_player") +" [B]";
+			choices[i] = item;
+		}
+
+		JLabel messageLabel = new JLabel("Select a game to review: ");
+		final JComboBox<String> comboBox = new JComboBox<>(choices);
+		final JComponent[] inputs = new JComponent[]{messageLabel, comboBox};
+		JOptionPane.showConfirmDialog(null, inputs, "Open Game", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+		// Load data from the database
+		String selectedItem = (String) comboBox.getSelectedItem();
+		int selectedID = Integer.valueOf(selectedItem.substring(1, selectedItem.indexOf(')')));
+		List<Map<String, String>> moveData = Database.getMovesFromID(selectedID);
+		List<String> moves = new LinkedList<>();
+		for (Map<String, String> map : moveData)
+			moves.add(map.get("move"));
+		applyMovesFromBasicNotationFile(moves);
+		play();
 	}
 
 	void loadGame() {

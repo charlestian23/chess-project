@@ -17,6 +17,11 @@ public class NoBoardView implements IBoardView {
 	}
 
 	@Override
+	public void setItemOpenGameActionListener(ActionListener actionListener) {
+
+	}
+
+	@Override
 	public void setItemNewActionListener(ActionListener actionListener) {
 
 	}

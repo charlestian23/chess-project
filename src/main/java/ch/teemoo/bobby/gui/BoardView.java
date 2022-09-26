@@ -50,6 +50,8 @@ public class BoardView extends JFrame implements IBoardView {
     private JMenuItem itemProposeDraw;
     private JMenuItem itemAbout;
 
+    private JMenuItem itemOpenGame;
+
     public BoardView(String title, GuiHelper guiHelper) {
         this(title, guiHelper, true);
     }
@@ -74,6 +76,11 @@ public class BoardView extends JFrame implements IBoardView {
     @SuppressFBWarnings("EI_EXPOSE_REP")
     public Square[][] getSquares() {
         return squares;
+    }
+
+    public void setItemOpenGameActionListener(ActionListener actionListener)
+    {
+        itemOpenGame.addActionListener(actionListener);
     }
 
     public void setItemNewActionListener(ActionListener actionListener) {
@@ -366,6 +373,9 @@ public class BoardView extends JFrame implements IBoardView {
         JMenuItem itemExit = new JMenuItem("Exit");
         fileMenu.add(itemExit);
         itemExit.addActionListener(actionEvent -> exit());
+        fileMenu.addSeparator();
+        this.itemOpenGame = new JMenuItem("Open Game");
+        fileMenu.add(this.itemOpenGame);
 
         JMenu gameMenu = new JMenu("Game");
         menuBar.add(gameMenu);
