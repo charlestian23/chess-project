@@ -106,7 +106,17 @@ public class GameController {
 		this.gameID = Database.getNextID();
 		this.game = gameFactory.createGame(gameSetup);
 
-		Database.addPlayers(this.gameID, this.game.getWhitePlayer().getName(), this.game.getBlackPlayer().getName());
+		String whitePlayerName = "";
+		if (this.game.getWhitePlayer() != null)
+			whitePlayerName = this.game.getWhitePlayer().getName();
+		else
+			whitePlayerName = "null";
+		String blackPlayerName = "";
+		if (this.game.getBlackPlayer() != null)
+			blackPlayerName = this.game.getBlackPlayer().getName();
+		else
+			blackPlayerName = "null";
+		Database.addPlayers(this.gameID, whitePlayerName, blackPlayerName);
 
 		this.board = game.getBoard();
 		this.gameResultConsumer = gameResultConsumer;
