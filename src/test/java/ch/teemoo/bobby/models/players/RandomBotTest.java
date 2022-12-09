@@ -30,7 +30,7 @@ public class RandomBotTest {
     public void testRandomBotProps() {
         Player bot = new RandomBot(moveService);
         assertThat(bot.getName()).isEqualTo("Bobby (CPU)");
-        assertThat(bot.getDescription()).isEqualTo("RandomBot Bobby");
+        assertThat(bot.getDescription()).isEqualTo("RandomBot Bobby (CPU)");
         assertThat(bot.isBot()).isTrue();
     }
 
