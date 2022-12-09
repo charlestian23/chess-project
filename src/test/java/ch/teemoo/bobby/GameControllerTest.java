@@ -517,7 +517,8 @@ public class GameControllerTest {
     @Test
     public void testEvaluateDrawProposalNotYourTurn() {
         // given
-        when(game.getPlayerWaiting()).thenReturn(new Human("test"));
+        Player bot = botFactory.getStrongestBot();
+        when(game.getPlayerWaiting()).thenReturn(bot);
 
         // when
         controller.evaluateDrawProposal();
