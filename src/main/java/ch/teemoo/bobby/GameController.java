@@ -434,7 +434,7 @@ public class GameController {
 
         // Load data from the database
         String selectedItem = (String) comboBox.getSelectedItem();
-        int selectedID = Integer.valueOf(selectedItem.substring(1, selectedItem.indexOf(')')));
+        int selectedID = Integer.parseInt(selectedItem.substring(1, selectedItem.indexOf(')')));
         List<Map<String, String>> moveData = Database.getMovesFromID(selectedID);
         List<String> moves = new LinkedList<>();
         for (Map<String, String> map : moveData)
