@@ -24,8 +24,8 @@ public class TraditionalBotTest {
     @Test
     public void testTraditionalBotProps() {
         Player bot = new TraditionalBot(0, null, moveService);
-        assertThat(bot.getName()).isEqualTo("Bobby");
-        assertThat(bot.getDescription()).isEqualTo("TraditionalBot Bobby (level 0)");
+        assertThat(bot.getName()).isEqualTo("Bobby (CPU)");
+        assertThat(bot.getDescription()).isEqualTo("TraditionalBot Bobby (CPU) (level 0)");
         assertThat(bot.isBot()).isTrue();
     }
 

@@ -38,8 +38,8 @@ public class ExperiencedBotTest {
     @Test
     public void testExperiencedBotProps() {
         Player bot = new ExperiencedBot(0, null, moveService, openingService);
-        assertThat(bot.getName()).isEqualTo("Bobby");
-        assertThat(bot.getDescription()).isEqualTo("ExperiencedBot Bobby (level 0)");
+        assertThat(bot.getName()).isEqualTo("Bobby (CPU)");
+        assertThat(bot.getDescription()).isEqualTo("ExperiencedBot Bobby (CPU) (level 0)");
         assertThat(bot.isBot()).isTrue();
     }
 
